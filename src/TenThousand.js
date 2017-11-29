@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import axios from 'axios';
 import Pagination from './Pagination';
+import PieChart from 'react-simple-pie-chart';
 
 class TenThousand extends React.Component {
     constructor() {
@@ -12,12 +13,27 @@ class TenThousand extends React.Component {
             pageOfItems: [],
             filterFemale: false,
             filterMale: false,
-            sortByName: false
+            sortByName: false,
+            data: {
+                labels: "female, male",
+                datasets: [
+                    {
+                        label: "My First dataset",
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "red",
+                        pointColor: "red",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [1,2]
+                    }]
+            }
         };
 
         this.onChangePage = this.onChangePage.bind(this);
         this.filterGender = this.filterGender.bind(this);
         this.sortedByName = this.sortedByName.bind(this);
+        this.drawStatistic = this.drawStatistic.bind(this);
 
     }
 
@@ -42,11 +58,6 @@ class TenThousand extends React.Component {
     componentWillMount(){
         this.downloadItems();
 
-    }
-
-    componentDidMount(){
-        let a = this.state.items.slice();
-        this.setState({starterState: a});
     }
 
     filterGender(number){
@@ -82,6 +93,24 @@ class TenThousand extends React.Component {
         this.setState({sortByName: true})
     }
 
+    drawStatistic(){
+        let count1 = 0;
+        let count2 = 0;
+        this.state.items.filter(item=> {
+            if(item.gender === "female")
+            {
+                count1++;
+            }
+            if(item.gender === "male")
+            {
+                count2++;
+            }
+
+        });
+        this.setState({femaleCount: count1,
+            maleCount: count2});
+
+    }
 
     render() {
         const {filterFemale, filterMale} = this.state;
@@ -100,6 +129,27 @@ class TenThousand extends React.Component {
                     <button className="selectGender"
                             onClick={()=>this.sortedByName()}>Sort</button>
 
+                </div>
+                <div className="statistic">
+                    <h3>Statistic: </h3>
+                    <button className="selectGender" onClick={()=>this.drawStatistic()}>Draw</button>
+                    <div className="pieChart">
+                        <PieChart
+                            borderWidth={10}
+                            slices={[
+                                {
+                                    color: '#468966',
+                                    value: this.state.femaleCount,
+                                },
+                                {
+                                    color: '#FFB03B',
+                                    value: this.state.maleCount,
+                                },
+                            ]}
+                        />
+                    </div>
+                    <h4 className="males">{this.state.maleCount ? "Males: "+ this.state.maleCount : "Males: "}</h4>
+                    <h4 className="females">{this.state.femaleCount ? "Females: "+ this.state.femaleCount : "Females: "}</h4>
                 </div>
                 {
                     this.state.sortByName ?

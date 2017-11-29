@@ -42,3 +42,20 @@
   display: block;
   margin-left: 650px;
 }
+
+.pieChart{
+  width:200px;
+  height: 200px;
+}
+
+.females{
+  color: #468966;
+}
+
+.males{
+  color: #FFB03B;
+}
+
+.statistic{
+  margin-left: 20px;
+}
