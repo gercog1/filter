@@ -50,9 +50,8 @@ class TenThousand extends React.Component {
     }
 
     filterGender(number){
-        let a = this.state.items.slice();
-        let b = this.state.items.slice();
-
+        let a = this.state.starterState.slice();
+        let b = this.state.starterState.slice();
 
         if(number === 1){
             this.setState({filterFemale: !this.state.filterFemale,
@@ -60,6 +59,7 @@ class TenThousand extends React.Component {
                 items: a.filter( item => {return item.gender === "female"})});
         }
         if(number === 2) {
+
             this.setState({
                 filterMale: !this.state.filterMale,
                 filterFemale: false,
@@ -131,7 +131,9 @@ class TenThousand extends React.Component {
 
                 }
 
-                <Pagination items={this.state.items} onChangePage={this.onChangePage} />
+                <div className="paginationContainer">
+                    <Pagination items={this.state.items} onChangePage={this.onChangePage} />
+                </div>
             </div>
         );
     }

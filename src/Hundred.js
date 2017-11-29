@@ -12,7 +12,21 @@ class Hundred extends React.Component {
             pageOfItems: [],
             filterFemale: false,
             filterMale: false,
-            sortByName: false
+            sortByName: false,
+            data: {
+                labels: "female, male",
+                datasets: [
+                    {
+                        label: "My First dataset",
+                        fillColor: "rgba(220,220,220,0.2)",
+                        strokeColor: "red",
+                        pointColor: "red",
+                        pointStrokeColor: "#fff",
+                        pointHighlightFill: "#fff",
+                        pointHighlightStroke: "rgba(220,220,220,1)",
+                        data: [1,2]
+                    }]
+            }
         };
 
        this.onChangePage = this.onChangePage.bind(this);
@@ -44,15 +58,9 @@ class Hundred extends React.Component {
 
     }
 
-    componentDidMount(){
-        let a = this.state.items.slice();
-        this.setState({starterState: a});
-    }
-
     filterGender(number){
-        let a = this.state.items.slice();
-        let b = this.state.items.slice();
-
+        let a = this.state.starterState.slice();
+        let b = this.state.starterState.slice();
 
         if(number === 1){
             this.setState({filterFemale: !this.state.filterFemale,
@@ -60,6 +68,7 @@ class Hundred extends React.Component {
                             items: a.filter( item => {return item.gender === "female"})});
         }
         if(number === 2) {
+
             this.setState({
                 filterMale: !this.state.filterMale,
                 filterFemale: false,
@@ -101,6 +110,7 @@ class Hundred extends React.Component {
                             onClick={()=>this.sortedByName()}>Sort</button>
 
                 </div>
+
                 {
                     this.state.sortByName ?
                     this.state.pageOfItems
@@ -131,7 +141,9 @@ class Hundred extends React.Component {
 
                 }
 
-                <Pagination items={this.state.items} onChangePage={this.onChangePage} />
+                <div className="paginationContainer">
+                     <Pagination items={this.state.items} onChangePage={this.onChangePage} />
+                </div>
             </div>
         );
     }

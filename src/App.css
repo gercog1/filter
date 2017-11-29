@@ -37,3 +37,8 @@
   margin-top: 20px;
   margin-left: 20px;
 }
+
+.paginationContainer{
+  display: block;
+  margin-left: 650px;
+}
